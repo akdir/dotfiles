@@ -1,0 +1,86 @@
+! special
+*.foreground:   #ABB2BF
+*.background:   #212121
+*.cursorColor:  #ABB2BF
+
+! black
+*.color0:       #212121
+*.color8:       #3E4452
+
+! red
+*.color1:       #E06C75
+*.color9:       #BE5046
+
+! green
+*.color2:       #98C379
+*.color10:      #98C379
+
+! yellow
+*.color3:       #E5C07B
+*.color11:      #D19A66
+
+! blue
+*.color4:       #6398CF
+*.color12:      #6398CF
+
+! magenta
+*.color5:       #C678DD
+*.color13:      #C678DD
+
+! cyan
+*.color6:       #56B6C2
+*.color14:      #56B6C2
+
+! white
+*.color7:       #ABB2BF
+*.color15:      #5C6370
+
+URxvt.cursorBlink  :1
+URxvt.url-launcher :usr/bin/firefox
+URxvt*font         :xft:ypn envypn:Style=bold
+
+URxvt.lineSpace               : 0
+URxvt.letterSpace             : 1
+URxvt.scrollBar               : false
+URxvt.internalBorder          : 8
+URxvt.cursorUnderline         : true
+URxvt.geometry                : 60x25
+URxvt.thickness               : 5
+URxvt.titleBar                : false
+URxvt.perl-ext-common         : default,tabbedex,matcher
+URxvt.tabbed.new-button       : true
+URXvt.tabbed.reopen-on-close  : no
+URxvt.keysym.Control-Shift-t  : perl:tabbedex:new_tab
+URxvt.keysym.Shifft-Right     : perl:tabbedex:next_tab
+URxvt.keysym.Shift-Left       : perl:tabbedex:prev_tab
+URxvt.tabbed.no-tabbedex-keys : true
+
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+
+rofi.color-window:    #222222 , #222222 , #222222 , #222222 , base07
+rofi.color-normal:    #222222 , #ffffff, #222222 , #222222 ,  base0E
+rofi.color-active:    #222222 , base0B  , #222222 , #222222 , base07
+rofi.color-urgent:    #222222 , base03  , #222222 , #222222 , base07
+
+rofi.fake-transparency : true
+rofi.font              : ypn envypn 9
+rofi.columns           : 1
+rofi.separator-style   : none
+rofi.hide-scrollbar    : true
+rofi.location          : 0
+rofi.padding           : 12
+rofi.fullscreen        : false
+rofi.width             : 350
+rofi.lines             : 6
+
+Xft.dpi       : 96
+Xft.antialias : true
+Xft.rgba      : rgb
+Xft.hinting   : true
+Xft.hintstyle : hintslight
+Xft.autohint  : false
+Xft.lcdfilter : lcddefault
