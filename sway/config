@@ -1,0 +1,367 @@
+#####################################################################################################################
+#################                          Basic Setttings                                          #################
+#####################################################################################################################
+#set Super key
+set $mod Mod4
+set $term alacritty
+
+#This is setup for qwerty
+set $up k
+set $down j
+set $left h
+set $right l
+
+#####################################################################################################################
+#################                          Single and Dual screen                                   #################
+#####################################################################################################################
+
+set $firstMonitor DP-4
+set $secondMonitor HDMI-A-1
+
+output $firstMonitor pos 0 0 res 2560x1080
+output $secondMonitor pos 2560 0 res 2560x1440
+
+output $firstMonitor background '~/Pictures/AyahAndMe/background.jpg' fill
+output $secondMonitor background '~/Pictures/AyahAndMe/background2.jpg' fill
+
+workspace 1 output $firstMonitor
+workspace 2 output $firstMonitor
+workspace 3 output $firstMonitor
+workspace 4 output $secondMonitor
+workspace 5 output $firstMonitor
+workspace 6 output $secondMonitor
+workspace 7 output $firstMonitor
+workspace 8 output $secondMonitor
+workspace 9 output $firstMonitor
+workspace 10 output $secondMonitor
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+
+#####################################################################################################################
+#################                          Gnome settings                                           #################
+#####################################################################################################################
+
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    #gsettings set $gnome-schema gtk-theme 'Orchis-dark'
+    gsettings set $gnome-schema icon-theme 'Breeze'
+    gsettings set $gnome-schema font-name 'MonoLisa 11'
+    gsettings set $gnome-schema monospace-font-name 'MonoLisa 11'
+    gsettings set $gnome-schema document-font-name 'MonoLisa Regular 11'
+    gsettings set org.gnome.desktop.wm.preferences titlebar-font 'MonoLisa Regular 11'
+    gsettings set org.gnome.desktop.wm.preferences button-layout ''
+    gsettings set org.gnome.desktop.default-applications.terminal exec $term
+    gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
+}
+
+
+#####################################################################################################################
+#####################################################################################################################
+
+# Picture-in-Picture Window
+bindsym $mod+c exec "i3-msg 'floating toggle; sticky toggle; resize shrink width 10000px; resize grow width 400px; resize shrink height 10000px; resize grow height 250px;move position 10px 10px;'"
+
+# Set custonm swaylock command 
+set $lock swaylock --screenshots \
+      --clock \
+      --indicator \
+      --indicator-radius 100 \
+      --indicator-thickness 7 \
+      --effect-blur 7x5 \
+      --effect-vignette 0.5:0.5 \
+      --ring-color 60AFEE \
+      --key-hl-color 0088CD \
+      --line-color 000000 \
+      --inside-color 231f20 \
+      --separator-color 000000 \
+      --grace 3 \
+      --fade-in 0.5 \
+      --effect-greyscale
+
+
+#Press $mod (super) and X to exit - check toolbar for next choices
+
+set $mode_system System (l) lock, (e) logout, (u) suspend, (h) hibernate, () reboot, (s) shutdown
+
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $lock, mode "default"
+    bindsym e exec --no-startup-id swaymsg exit, mode "default"
+    bindsym u exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id systemctl poweroff, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+x mode "$mode_system"
+
+exec swayidle -w \
+    timeout 500 '$lock &' \
+    timeout 505 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 1000 'systemctl suspend' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'playerctl sleep' \
+    before-sleep '$lock'
+
+#####################################################################################################################
+#################                          reload changed configuration                             #################
+#####################################################################################################################
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+#####################################################################################################################
+#################                          Stopping an application                                  #################
+#####################################################################################################################
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+#####################################################################################################################
+#################                          Moving around in i3                                      #################
+#####################################################################################################################
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# toggle tiling / floating
+bindsym $mod+Shift+f floating toggle
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+#####################################################################################################################
+#################                          Moving around workspaces                                 #################
+#####################################################################################################################
+
+# next/previous workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+#####################################################################################################################
+#################                          Tiling parameters                                        #################
+#####################################################################################################################
+
+# orientation for new workspaces
+default_orientation horizontal
+
+# split in horizontal orientation
+bindsym $mod+semicolon split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+# Super + F in archlabs is execute thunar
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+#####################################################################################################################
+#################                          Resize                                                   #################
+#####################################################################################################################
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+#####################################################################################################################
+#################                          Font and border                                          #################
+#####################################################################################################################
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# choose your font
+font pango: MonoLisa
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders both
+titlebar_border_thickness 0
+
+#####################################################################################################################
+#################                          Assign applications to workspaces                       #################
+#####################################################################################################################
+# Assign application to start on a specific workspace
+# you can find the class with the program xprop
+
+# Workspace 2 browser related
+assign [class="brave-browser|Brave-browser|Firefox|Navigator|Vivaldi-stable|Vivaldi-snapshot|Opera"]                    → 2
+assign [class="firefoxdeveloperedition"]                                                    → 2
+
+# Workspace 3 text editor related
+
+assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]               → 3
+assign [class="vscodium|VSCodium|code-oss|Xed|xed|Brackets|Atom|Code|Geany|emacs|Emacs"]                      → 3
+
+# Workspace 4 Discord
+assign [class="discord"]                                                                    → 4
+assign [class="Discord"]                                                                    → 4
+assign [class="viber|ViberPC"]                                                              → 4
+
+# Workspace 5 Steam + Games
+assign [class="MTGA.exe|mtga.exe|lutris|Lutris|Steam|steam|steam-native|steam-runtime|steamdeps|Wine|wine"]   → 5
+
+# Workspace 6 virtual machines and settings
+#assign [class="Virtualbox|virtualbox|vmware|Vmware|Vmplayer"]                                          → 6
+
+# Workspace 7 Gimp and image editing
+assign [class="gimp|Gimp|gimp-2.0"]                                                         → 7
+assign [class="krita|Krita|kritarunner"]                                                    → 7
+assign [class="audacity|Audacity"]                                                          → 7
+assign [class="org.inkscape.Inkscape|Inkscape"]                                                          → 7
+
+# Workspace 8 music related
+assign [class="Spotify|spotify"]                                                            → 8
+#fix for spotify not moving to workspace 8
+for_window [class="Spotify"] move to workspace 8
+
+# Workspace 9 Video Watching
+assign [class="Vlc|vlc"]                                                                    → 9
+
+# Workspace 10 Mail client 
+assign [class="mailspring|Mailspring"]                                                      → 10
+
+#####################################################################################################################
+#################                          Execute applications at startup                  #################
+#####################################################################################################################
+
+# Redshift for wayland
+exec gammastep 
+
+#clipboard at startup
+exec xfce4-clipman
+
+# Automount USB Sticks
+exec udiskie -t
+
+# Notification center wayland
+exec mako
+
+# nm-applet at stratup
+exec nm-applet
+
+# Mail clients
+exec mailspring
+
+# Bluetooth
+exec blueman-applet
+
+# Music
+exec spotify
+
+# KDE Connect - For phone :)
+exec /usr/lib/kdeconnectd
+
+# Corsair Keyboard Software
+exec ckb-next -b
+
+# Authentication dialog
+exec lxsession & 
+
+# Discord
+exec discord;workspace 4
+
+#####################################################################################################################
+#################                          Applications keyboard shortcuts                          #################
+#####################################################################################################################
+# Raise volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+
+# Lower Volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+
+# Mute Volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# terminal
+bindsym $mod+Return exec alacritty
+
+#start ulauncher
+bindsym $mod+d exec ulauncher --no-window-shadow
+
+#Ranger map system
+bindsym $mod+m exec alacritty -e ranger
+
+#Open screenshot app
+bindsym $mod+Shift+s exec 'grim -g "$(slurp)" - | swappy -f -'
+
+#workspace 1 related
+bindsym $mod+Shift+w exec firefox-developer-edition;workspace 2
+
+bar {
+  swaybar_command waybar
+}
+
+include /etc/sway/config.d/*

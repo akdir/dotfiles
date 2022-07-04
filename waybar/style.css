@@ -1,0 +1,45 @@
+* {
+  font-family: MonoLisa, "Font Awesome 5 Free";
+  font-size: 12pt;
+  color: white;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition-duration: 0s;
+}
+
+window#waybar {
+  background: #231f20;
+  opacity: 0.85;
+}
+
+#window,
+#memory,
+#disk,
+#pulseaudio,
+#custom-weather,
+#cpu {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#custom-weather {
+  padding-left: 2rem;
+  font-weight: bold;
+}
+
+#workspaces {
+  background: #60AFEE;
+  color: white;
+  font-weight: bold;
+  border-radius: 0 1rem 1rem 0;
+}
+#workspaces button {
+  background: transparent;
+}
+
+#workspaces button.focused {
+  background: #0088CD;
+  border-radius: 1rem;
+}
